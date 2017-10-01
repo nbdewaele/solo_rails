@@ -1,0 +1,27 @@
+<%= render partial: "section_header", locals: {
+  title: "#{current_user.first_name.titleize} Albums",
+  link_new: true
+} %>
+
+<% if @albums.any? %>
+  <div class="container">
+    <div class="row">
+      <% @albums.each_with_index do |album, ix| %>
+        <div class="col col-md-4">
+          <div class="alert alert-success">
+            <h2> <%= album.title %></h2>
+            <% if album.caption %>
+              <p>Caption: <%= album.caption %></p>
+            <% end %>
+            <%= link_to "More info", album_path(album), class: 'btn btn-warning more-info-tag' %>
+            <%= link_to "Remove", album_path(album), class: 'btn btn-danger remove-album' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <h4>hey, <strong><%= current_user.first_name %></strong> you don't have any album yet.
+  Why don't you create one here</h4>
+  <%= link_to "New Album", new_album_path %>
+<% end %>
